@@ -1,0 +1,440 @@
+@import "compass/css3/box-sizing";
+@import "compass/css3/box-shadow";
+@import "compass/css3/transition";
+@import "compass/css3/transform";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/border-radius";
+@import "compass/css3/text-shadow";
+@import "../../node_modules/susy/sass/susy";
+
+@import "common/variables";
+@import "mixins/fonts";
+@import "mixins/media";
+
+@import "common/reset";
+@import "common/fonts";
+@import "common/type";
+@import "common/layout";
+@import "common/footer";
+@import "common/forms";
+@import "common/buttons";
+
+
+.title {
+    @include regular(22px, 72px);
+    background-color: white;
+    text-transform: uppercase;
+    color: $inaccent-text-color;
+    padding: 0 30px;
+    margin: 30px 0 10px;
+    border: 0 solid $inaccent-text-color;
+    border-width: 2px 0;
+}
+
+%active-placeholder {
+    font-size: 10px;
+    top: 5px;
+    color: $base-text-color;
+}
+
+.employees__search-box {
+    margin-bottom: 30px;
+    padding: 0 30px;
+
+    .search-box__form .search-box__input {
+        position: relative;
+        height: 50px;
+
+        input[type~="search"], input[type~="text"] {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            display: inline-block;
+            border: 1px solid $base-border-color;
+            padding: 0 12px;
+            border-radius: 2px;
+            color: $inaccent-text-color;
+            @include regular(16px, 48px);
+            @include transition(all 250ms ease-in);
+
+            &:hover {
+                border-color: darken($base-border-color, 10%);
+            }
+
+            &:not(.active),
+            &:focus {
+                border-color: $accent-border-color;
+                color: $accent-text-color;
+                line-height: 34px;
+                padding-top: 14px;
+
+                & + .active-placeholder {
+                    @extend %active-placeholder;
+                }
+            }
+
+            &.fill {
+                line-height: 34px;
+                padding-top: 14px;
+            }
+
+            &.fill + .active-placeholder {
+                @extend %active-placeholder;
+            }
+        }
+    }
+}
+
+.active-placeholder {
+    position: absolute;
+    width: auto;
+    max-width: 400px;
+    background-color: white;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    left: 9px;
+    top: 18px;
+    @include light(14px, 1);
+    color: $inaccent-text-color;
+    @include transition(all 250ms ease-in);
+    pointer-events: none;
+}
+
+.employees {
+    padding: 48px 0;
+
+    &-list {
+        width: calc(100% - 60px);
+        margin: 0 auto;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 30px;
+
+        @include media-small() {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include media-large() {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .employee {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 168px;
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px 25px 20px 25px;
+            @include box-shadow(
+                1px 2px 2px 1px rgba(0,0,0,.19),
+                2px 1px 10px 1px rgba(0,0,0,.39)
+            );
+            @include transition(all 300ms ease-in-out);
+
+            &:hover {
+                @include scale(1.1);
+                @include box-shadow(
+                    2px 1px 20px 1px rgba(0,0,0,.39)
+                );
+            }
+
+            &__avatar {
+                flex: 1 128px;
+                width: 128px;
+                height: 128px;
+                border-radius: 50%;
+                overflow: hidden;
+                flex-grow: 0;
+                margin-right: 25px;
+            }
+
+            &-wrapper {
+                flex: 2;
+            }
+
+            &__name {
+                &-title, &-username {
+                    display: block;
+                    @include light(12px, 18px);
+                    color: $inaccent-text-color;
+                }
+                @include bold(18px, 22px);
+                color: $base-text-color;
+                margin-bottom: 15px;
+            }
+
+            &__email {
+                
+                a {
+                    position: relative;
+                    @include regular(16px, 22px);
+                    color: $inaccent-text-color;
+                    @include text-shadow(0px 0px 3px white);
+                    text-decoration: underline;
+                    text-decoration-color: $inaccent-text-color;
+                    @include transition(all 250ms ease-in-out);
+
+                    &:hover {
+                        color: $accent-text-color;
+                        text-decoration-color: $accent-border-color;
+                    }
+                }
+            }
+
+            &__city {
+                @include regular(16px, 22px);
+                color: $inaccent-text-color;
+            }
+        }
+    }
+
+}
+
+.error {
+    padding: 0 30px;
+    margin: 30px 0;
+
+    span {
+        text-align: center;
+        display: block;
+        padding: 0 25px;
+        @include regular(16px, 72px);
+        background-color: white;
+        border-radius: 4px;
+        border: 1px solid $inaccent-text-color;
+        color: $inaccent-text-color;
+    }
+}
+
+.popup-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    z-index: 9999;
+}
+
+.popup-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .35);
+}
+
+@keyframes wow {
+    0% {
+        @include transform(scale(0) translate(-50%, -50%));
+    }
+    80% {
+        @include transform(scale(1.3) translate(-50%, -50%));
+    }
+    100% {
+        @include transform(scale(1) translate(-50%, -50%));
+    }
+}
+
+@keyframes diswow {
+    from {
+        @include transform(scale(1) translate(-50%, -50%));
+    }
+    to {
+        @include transform(scale(0) translate(-50%, -50%));
+    }
+}
+
+.popup-content {
+    position: absolute;
+    width: auto;
+    height: auto;
+    min-width: 250px;
+    min-height: 450px;
+    z-index: 10000;
+    background-color: white;
+    border-radius: 10px;
+    top: 50%; left: 50%;
+    transform-origin: left bottom;
+    @include box-shadow(0 1px 5px rgba(0, 0, 0, .5));
+    animation: wow 1000ms ease-in 0s 1 normal forwards;
+}
+
+.close-popup .popup-content {
+    animation: diswow 300ms ease-in 0s 1 normal forwards;
+}
+
+.employee-window {
+    min-width: 500px;
+    padding: 30px 45px;
+    text-align: center;
+
+    .employee__avatar {
+        margin: 15px 0;
+        img {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+    }
+
+    .employee__name {
+        @include bold(22px, 36px);
+        color: $base-text-color;
+    }
+
+    .employee__email {
+        a {
+            position: relative;
+            @include regular(16px, 22px);
+            color: $inaccent-text-color;
+            @include text-shadow(0px 0px 3px white);
+            text-decoration: underline;
+            text-decoration-color: $inaccent-text-color;
+            @include transition(all 250ms ease-in-out);
+
+            &:hover {
+                color: $accent-text-color;
+                text-decoration-color: $accent-border-color;
+            }
+        }
+    }
+    
+    .employee__city,
+    .employee__phone,
+    .employee__address,
+    .employee__dob
+     {
+        @include regular(16px, 32px);
+        color: $inaccent-text-color;
+    }
+}
+
+.devider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background-color: $base-border-color;
+}
+
+.action-close {
+    width: 16px;
+    height: 16px;
+    top: 25px;
+    right: 25px;
+    position: absolute;
+    cursor: pointer;
+    
+    &::after, &::before {
+        content: "";
+        position: absolute;
+        top: 7px;
+        left: 0;
+        width: 16px;
+        height: 2px;
+        background-color: $base-border-color;
+        @include transition(background-color 250ms ease-in-out);
+    }
+
+    &::after {
+        @include rotate(45deg);
+    }
+
+    &::before {
+        @include rotate(-45deg);
+    }
+
+    &:hover {
+        &::after, &::before {
+            background-color: $accent-border-color;
+        }
+    }
+}
+
+.action-prev, .action-next{
+    position: absolute;
+    width: 16px; height: 16px;
+    border: 0 solid $base-border-color;
+    top: calc(50% - 8px);
+    cursor: pointer;
+    @include transition(border-color 250ms ease-in-out);
+
+    &:hover {
+        border-color: $accent-border-color;
+    }
+}
+
+.action-prev {
+    left: 15px;
+    border-width: 1px 0 0 1px;
+    @include rotate(-45deg);
+}
+
+.action-next {
+    right: 15px;
+    border-width: 1px 1px 0 0;
+    @include rotate(45deg);
+}
+
+@keyframes spin {
+    from {
+      @include rotate(0);
+    }
+    to {
+      @include rotate(360deg);
+    }
+} 
+
+@keyframes spin-mark {
+    0% {
+        @include scale(0);
+    }
+    60% {
+        @include scale(1);
+    }
+    100% {
+        @include scale(0);
+    }
+}
+
+.mask {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    background-color: transparentize($color: white, $amount: .2);
+    z-index: 9999;
+
+    .spinner {
+        position: absolute;
+        width: 72px;
+        height: 72px;
+        background-color: $accent-text-color;
+        border-radius: 50%;
+        top: calc(50% - 36px);
+        left: calc(50% - 36px);
+        animation: spin 1500ms infinite linear;
+
+        &::after, &::before {
+            position: absolute;
+            content: "";
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            
+        }
+
+        &::after {
+            top: 15px; right: 15px;
+            animation: spin-mark 2000ms infinite linear;
+        }
+
+        &::before {
+            bottom: 15px; left: 15px;
+            animation: spin-mark 5000ms ease 0s infinite alternate-reverse;
+        }
+    }
+}
