@@ -131,6 +131,7 @@
             background-color: white;
             border-radius: 10px;
             padding: 20px 25px 20px 25px;
+            cursor: pointer;
             @include box-shadow(
                 1px 2px 2px 1px rgba(0,0,0,.19),
                 2px 1px 10px 1px rgba(0,0,0,.39)

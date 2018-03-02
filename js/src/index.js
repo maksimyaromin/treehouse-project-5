@@ -1,4 +1,8 @@
 {
+    /* 
+    */
+    /* Функция для написания слова с прописной буквы
+    */
     const capitalize = ([a, ...b]) => {
         return a.toUpperCase() + b.join("");
     };
@@ -16,19 +20,28 @@
         element.on("blur", action).addClass("active");
     };
 
+    /* jQuery хэлпер для построения директории пользователей
+    */
     $.fn.employees = function(options) {
 
+        /* Состояние приложения. В нем хранится ссылка на ДОМ элемент, массивы данных и 
+            рабочих данных, а так же возможные настройки
+        */
         const state = Object.assign({
             data: [],
             buffer: [],
             element: this
         }, options);
 
+        /* Функция для очистки списка пользователей
+        */
         const clean = () => {
             state.element.find(".employees-list").remove();
             state.element.find(".error").remove();
         };
 
+        /* Функция для закрытия окна с дополнительной информацией
+        */
         const hideDetailPopup = (element) => {
             element.addClass("close-popup").one("animationend oAnimationEnd mozAnimationEnd webkitAnimationEnd", () => {
                 $(document.body).off("click.popup");
@@ -36,6 +49,8 @@
             });
         };
 
+        /* Функция для открытия окна с дополнительной информацией
+        */
         const showDetailPopup = (employee, index) => {
             $(".popup-wrapper").remove();
             const employeeAddress = `
@@ -86,7 +101,8 @@
             });
 
             
-            
+            /* Установка обработчиков событий для иконки закрытия, а так же иконок назад и вперед
+            */
             const closeAction = popupContext.find(".action-close");
             closeAction.on("click", () => {
                 hideDetailPopup(popupContext);
@@ -105,6 +121,8 @@
             });
         };
 
+        /* Функция подготовки открытия окна с дополнительной информацией по пользователю
+        */
         const detailInit = (e) => {
             const employeeContext = $(e.target).closest(".employee");
             let employee, index;
@@ -120,6 +138,8 @@
             showDetailPopup(employee, index);
         };
 
+        /* Функция для построения грида с пользователями
+        */
         const buildList = (employees) => {
             clean();
             const context = $(`<div class="employees-list"></div>`)
@@ -147,11 +167,15 @@
                 `);
             });
 
+            /* Установка обработчика для открытия окна с дополнительной информацией
+            */
             if(state.detail) {
                 context.find(".employee").off("click").on("click", detailInit);
             }
         };
 
+        /* Функция для построения поля для поиска
+        */
         const buildFilter = () => {
 
             const context = $(`
@@ -204,6 +228,8 @@
             });
         };
 
+        /* Функция для построения основной информации о пользователях
+        */
         const build = () => {
             buildList(state.buffer);
             if(state.filterable) {
@@ -211,6 +237,8 @@
             }
         };
 
+        /* Получение данных и инициализация контрола
+        */
         if(typeof state.dataSource.transport === "function") {
             const success = (data) => {
                 state.data = data.results;
@@ -236,6 +264,9 @@
     };
 
     $(document).ready(() => {
+        /* После готовности документа инициализировать директорию пользователей 
+            с настройками
+        */
         $(".employees-wrapper").employees({
             dataSource: {
                 transport: (success, error) => {
