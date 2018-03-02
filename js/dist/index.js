@@ -3,6 +3,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 {
+  /* Function for words writing in the initial letter   
+  */
   var capitalize = function capitalize(_ref) {
     var _ref2 = _toArray(_ref),
         a = _ref2[0],
@@ -10,7 +12,7 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
     return a.toUpperCase() + b.join("");
   };
-  /* Хэлпер для получения активного плэйсхолдера
+  /* Helper for receiving an active placeholder    
   */
 
 
@@ -25,18 +27,29 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
     element.on("blur", action).addClass("active");
   };
+  /* jQuery helper for the creation of a Employee Directory    
+  */
+
 
   $.fn.employees = function (options) {
+    /* The Application status. Here there is reference to DOM-element, 
+        data array and working details as well as possible settings        
+    */
     var state = Object.assign({
       data: [],
       buffer: [],
       element: this
     }, options);
+    /* Function of the users removal
+    */
 
     var clean = function clean() {
       state.element.find(".employees-list").remove();
       state.element.find(".error").remove();
     };
+    /* Function for the closing-down of an additional data details window       
+    */
+
 
     var hideDetailPopup = function hideDetailPopup(element) {
       element.addClass("close-popup").one("animationend oAnimationEnd mozAnimationEnd webkitAnimationEnd", function () {
@@ -44,6 +57,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
         element.remove();
       });
     };
+    /* Function for the opening of an additional data details window       
+    */
+
 
     var showDetailPopup = function showDetailPopup(employee, index) {
       $(".popup-wrapper").remove();
@@ -56,6 +72,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
           return e.stopPropagation();
         });
       });
+      /*  Installment of the events processors for the closing icon, as well as the icons forward and backword           
+      */
+
       var closeAction = popupContext.find(".action-close");
       closeAction.on("click", function () {
         hideDetailPopup(popupContext);
@@ -71,6 +90,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
         showDetailPopup(state.buffer[index - 1], index - 1);
       });
     };
+    /* Function for the preparation of the opening of an additional user data details window        
+    */
+
 
     var detailInit = function detailInit(e) {
       var employeeContext = $(e.target).closest(".employee");
@@ -92,6 +114,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
       showDetailPopup(employee, index);
     };
+    /* Function for the building of grid with the user     
+    */
+
 
     var buildList = function buildList(employees) {
       clean();
@@ -99,11 +124,16 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
       employees.forEach(function (employee, index) {
         context.append("\n                    <div class=\"employee\" data-uid=\"".concat(employee.id.name || index).concat(employee.id.value || "", "\">\n                        <div class=\"employee__avatar\">\n                            <img src=\"").concat(employee.picture.large, "\" alt=\"").concat(employee.name.first, " ").concat(employee.name.last, "\" />\n                        </div>\n                        <div class=\"employee-wrapper\">\n                            <div class=\"employee__name\">\n                                <span class=\"employee__name-title\">").concat(employee.name.title, "</span>\n                                <span>").concat(capitalize(employee.name.first), " ").concat(capitalize(employee.name.last), "<span>\n                                <span class=\"employee__name-username\">").concat(employee.login.username, "</span>\n                            </div>\n                            <div class=\"employee__email\">\n                                <a href=\"mailto:").concat(employee.email, "\">").concat(employee.email, "</a>\n                            </div>\n                            <div class=\"employee__city\">\n                                <span>").concat(capitalize(employee.location.city), "</span>\n                            </div>\n                        </div>\n                    </div>\n                "));
       });
+      /* Instalment of the data processor for the additional data details           
+      */
 
       if (state.detail) {
         context.find(".employee").off("click").on("click", detailInit);
       }
     };
+    /* Function for the search box building       
+    */
+
 
     var buildFilter = function buildFilter() {
       var context = $("\n                <div class=\"employees__search-box\">\n                    <form action=\"#\" class=\"search-box__form\">\n                        <div class=\"search-box__input\">\n                            <input type=\"search\" name=\"search\" id=\"search\" />\n                            <span class=\"active-placeholder\">Search</span>\n                        </div>\n                    </form>\n                </div>\n            ").prependTo(state.element);
@@ -133,7 +163,7 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
           } else {
             clean();
             state.buffer = [];
-            state.element.append("\n                            <div class=\"error error-messenge\">\n                                <span>\u041A \u0441\u043E\u0436\u0430\u043B\u0435\u043D\u0438\u044E \u0432\u0430\u0448 \u0437\u0430\u043F\u0440\u043E\u0441 \u043D\u0435 \u0434\u0430\u043B \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432</span>\n                            </div>\n                        ");
+            state.element.append("\n                            <div class=\"error error-messenge\">\n                                <span>We are sorry, there are no results matching your search</span>\n                            </div>\n                        ");
           }
         } else {
           state.buffer = _toConsumableArray(state.data);
@@ -141,6 +171,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
         }
       });
     };
+    /* Function for the building of main user data details        
+    */
+
 
     var build = function build() {
       buildList(state.buffer);
@@ -149,6 +182,9 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
         buildFilter();
       }
     };
+    /* Receiving data and control initialization
+    */
+
 
     if (typeof state.dataSource.transport === "function") {
       var success = function success(data) {
@@ -158,7 +194,7 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
       };
 
       var error = function error(err) {
-        state.element.html("\n                    <div class=\"error error-messenge\">\n                        <span>".concat(err.error ? err.error : "Извинте, в данный момент сервис недоступен. Повторите попытку позже.", "</span>\n                    </div>\n                "));
+        state.element.html("\n                    <div class=\"error error-messenge\">\n                        <span>".concat(err.error ? err.error : "We\'re sorry. The service is temporally unavailable. Try again in a few minutes.", "</span>\n                    </div>\n                "));
       };
 
       state.dataSource.transport(success, error);
@@ -172,6 +208,8 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
   };
 
   $(document).ready(function () {
+    /* After the document preparation to initialize the Employee Directory with the settings 
+    */
     $(".employees-wrapper").employees({
       dataSource: {
         transport: function transport(success, error) {

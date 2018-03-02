@@ -1,13 +1,11 @@
 {
-    /* 
-    */
-    /* Функция для написания слова с прописной буквы
+    /* Function for words writing in the initial letter   
     */
     const capitalize = ([a, ...b]) => {
         return a.toUpperCase() + b.join("");
     };
 
-    /* Хэлпер для получения активного плэйсхолдера
+    /* Helper for receiving an active placeholder    
     */
     const activePlaceholder = (element) => {
         const action = () => {
@@ -20,12 +18,12 @@
         element.on("blur", action).addClass("active");
     };
 
-    /* jQuery хэлпер для построения директории пользователей
+    /* jQuery helper for the creation of a Employee Directory    
     */
     $.fn.employees = function(options) {
 
-        /* Состояние приложения. В нем хранится ссылка на ДОМ элемент, массивы данных и 
-            рабочих данных, а так же возможные настройки
+        /* The Application status. Here there is reference to DOM-element, 
+            data array and working details as well as possible settings        
         */
         const state = Object.assign({
             data: [],
@@ -33,14 +31,14 @@
             element: this
         }, options);
 
-        /* Функция для очистки списка пользователей
+        /* Function of the users removal
         */
         const clean = () => {
             state.element.find(".employees-list").remove();
             state.element.find(".error").remove();
         };
 
-        /* Функция для закрытия окна с дополнительной информацией
+        /* Function for the closing-down of an additional data details window       
         */
         const hideDetailPopup = (element) => {
             element.addClass("close-popup").one("animationend oAnimationEnd mozAnimationEnd webkitAnimationEnd", () => {
@@ -49,7 +47,7 @@
             });
         };
 
-        /* Функция для открытия окна с дополнительной информацией
+        /* Function for the opening of an additional data details window       
         */
         const showDetailPopup = (employee, index) => {
             $(".popup-wrapper").remove();
@@ -101,7 +99,7 @@
             });
 
             
-            /* Установка обработчиков событий для иконки закрытия, а так же иконок назад и вперед
+            /*  Installment of the events processors for the closing icon, as well as the icons forward and backword           
             */
             const closeAction = popupContext.find(".action-close");
             closeAction.on("click", () => {
@@ -121,7 +119,7 @@
             });
         };
 
-        /* Функция подготовки открытия окна с дополнительной информацией по пользователю
+        /* Function for the preparation of the opening of an additional user data details window        
         */
         const detailInit = (e) => {
             const employeeContext = $(e.target).closest(".employee");
@@ -138,7 +136,7 @@
             showDetailPopup(employee, index);
         };
 
-        /* Функция для построения грида с пользователями
+        /* Function for the building of grid with the user     
         */
         const buildList = (employees) => {
             clean();
@@ -167,14 +165,14 @@
                 `);
             });
 
-            /* Установка обработчика для открытия окна с дополнительной информацией
+            /* Instalment of the data processor for the additional data details           
             */
             if(state.detail) {
                 context.find(".employee").off("click").on("click", detailInit);
             }
         };
 
-        /* Функция для построения поля для поиска
+        /* Function for the search box building       
         */
         const buildFilter = () => {
 
@@ -217,7 +215,7 @@
                         state.buffer = [];
                         state.element.append(`
                             <div class="error error-messenge">
-                                <span>К сожалению ваш запрос не дал результатов</span>
+                                <span>We are sorry, there are no results matching your search</span>
                             </div>
                         `);
                     }
@@ -228,7 +226,7 @@
             });
         };
 
-        /* Функция для построения основной информации о пользователях
+        /* Function for the building of main user data details        
         */
         const build = () => {
             buildList(state.buffer);
@@ -237,7 +235,7 @@
             }
         };
 
-        /* Получение данных и инициализация контрола
+        /* Receiving data and control initialization
         */
         if(typeof state.dataSource.transport === "function") {
             const success = (data) => {
@@ -248,7 +246,7 @@
             const error = (err) => {
                 state.element.html(`
                     <div class="error error-messenge">
-                        <span>${err.error ? err.error : "Извинте, в данный момент сервис недоступен. Повторите попытку позже."}</span>
+                        <span>${err.error ? err.error : "We\'re sorry. The service is temporally unavailable. Try again in a few minutes."}</span>
                     </div>
                 `);
             };
@@ -264,8 +262,7 @@
     };
 
     $(document).ready(() => {
-        /* После готовности документа инициализировать директорию пользователей 
-            с настройками
+        /* After the document preparation to initialize the Employee Directory with the settings 
         */
         $(".employees-wrapper").employees({
             dataSource: {
