@@ -28,5 +28,7 @@ use the following commands:
     npm start
 ```
 
+## [View on GitHub Pages](https://ermaxnet.github.io/treehouse-project-5/)
+
 ### I hope you will enjoy it. Max Eremin
 
