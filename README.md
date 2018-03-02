@@ -11,7 +11,7 @@ JS Developer Program.
 | Setting | Description | Default value |
 | --- | --- | --- |
 | `dataSource` | настройка источника данных  | *null* |
-| `dataSource.data` | задать синхронный источник данных (для нашего задания не годиться)  | ```js new Array(0) ``` |
+| `dataSource.data` | задать синхронный источник данных (для нашего задания не годиться)  | ``` new Array(0) ``` |
 | `dataSource.transport` | функция, которая принимает два коллбэка (success, error) и описывает AJAX-запрос за данными  | *null* |
 | `filterable` | настройка, показывающая инициализировать ли поле поиска или нет | *false* |
 | `detail` | настройка, показывающая инициализировать ли открытие окна с дополнительной информацией по клику на карточку пользователя | *false* |
@@ -20,9 +20,9 @@ JS Developer Program.
 
 Если включена опция посика, то фильтроваться данные будет по наличию последовательности введенных символов в имени, фамилии или нике пользователя. Т. е. если введено 
 *t*, то подошедшими к запросу будут следующие пользователи:
-* ```js { name: { first: "Tom" } }```
-* ```js { name: { last: "Skott" } }```
-* ```js { login: { username: "skout56" } }```
+* ``` { name: { first: "Tom" } } ```
+* ``` { name: { last: "Skott" } } ```
+* ``` { login: { username: "skout56" } } ```
 
 To run the project one can start index.html file in its browser
 or 
